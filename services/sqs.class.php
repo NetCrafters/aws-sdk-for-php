@@ -21,16 +21,16 @@
  * without losing messages or requiring each component to be always available. Amazon SQS makes it
  * easy to build an automated workflow, working in close conjunction with the Amazon Elastic
  * Compute Cloud (Amazon EC2) and the other AWS infrastructure web services.
- *  
+ *
  * Amazon SQS works by exposing Amazon's web-scale messaging infrastructure as a web service. Any
  * computer on the Internet can add or read messages without any installed software or special
  * firewall configurations. Components of applications using Amazon SQS can run independently, and
  * do not need to be on the same network, developed with the same technologies, or running at the
  * same time.
- *  
+ *
  * Visit <a href="http://aws.amazon.com/sqs/">http://aws.amazon.com/sqs/</a> for more information.
  *
- * @version 2011.12.13
+ * @version 2011.10.20
  * @license See the included NOTICE.md file for complete information.
  * @copyright See the included NOTICE.md file for complete information.
  * @link http://aws.amazon.com/sqs/ Amazon Simple Queue Service
@@ -47,19 +47,9 @@ class AmazonSQS extends CFRuntime
 	const REGION_US_E1 = 'sqs.us-east-1.amazonaws.com';
 
 	/**
-	 * Specify the queue URL for the United States East (Northern Virginia) Region.
-	 */
-	const REGION_VIRGINIA = self::REGION_US_E1;
-
-	/**
 	 * Specify the queue URL for the United States West (Northern California) Region.
 	 */
 	const REGION_US_W1 = 'sqs.us-west-1.amazonaws.com';
-
-	/**
-	 * Specify the queue URL for the United States West (Northern California) Region.
-	 */
-	const REGION_CALIFORNIA = self::REGION_US_W1;
 
 	/**
 	 * Specify the queue URL for the United States West (Oregon) Region.
@@ -67,19 +57,9 @@ class AmazonSQS extends CFRuntime
 	const REGION_US_W2 = 'sqs.us-west-2.amazonaws.com';
 
 	/**
-	 * Specify the queue URL for the United States West (Oregon) Region.
-	 */
-	const REGION_OREGON = self::REGION_US_W2;
-
-	/**
 	 * Specify the queue URL for the Europe West (Ireland) Region.
 	 */
 	const REGION_EU_W1 = 'sqs.eu-west-1.amazonaws.com';
-
-	/**
-	 * Specify the queue URL for the Europe West (Ireland) Region.
-	 */
-	const REGION_IRELAND = self::REGION_EU_W1;
 
 	/**
 	 * Specify the queue URL for the Asia Pacific Southeast (Singapore) Region.
@@ -87,77 +67,14 @@ class AmazonSQS extends CFRuntime
 	const REGION_APAC_SE1 = 'sqs.ap-southeast-1.amazonaws.com';
 
 	/**
-	 * Specify the queue URL for the Asia Pacific Southeast (Singapore) Region.
-	 */
-	const REGION_SINGAPORE = self::REGION_APAC_SE1;
-
-	/**
 	 * Specify the queue URL for the Asia Pacific Northeast (Tokyo) Region.
 	 */
 	const REGION_APAC_NE1 = 'sqs.ap-northeast-1.amazonaws.com';
 
 	/**
-	 * Specify the queue URL for the Asia Pacific Northeast (Tokyo) Region.
-	 */
-	const REGION_TOKYO = self::REGION_APAC_NE1;
-
-	/**
-	 * Specify the queue URL for the South America (Sao Paulo) Region.
-	 */
-	const REGION_SA_E1 = 'sqs.sa-east-1.amazonaws.com';
-
-	/**
-	 * Specify the queue URL for the South America (Sao Paulo) Region.
-	 */
-	const REGION_SAO_PAULO = self::REGION_SA_E1;
-
-	/**
 	 * Default service endpoint.
 	 */
 	const DEFAULT_URL = self::REGION_US_E1;
-
-
-	/*%******************************************************************************************%*/
-	// CONSTRUCTOR
-
-	/**
-	 * Constructs a new instance of <AmazonSQS>.
-	 *
-	 * @param array $options (Optional) An associative array of parameters that can have the following keys: <ul>
-	 * 	<li><code>certificate_authority</code> - <code>boolean</code> - Optional - Determines which Cerificate Authority file to use. A value of boolean <code>false</code> will use the Certificate Authority file available on the system. A value of boolean <code>true</code> will use the Certificate Authority provided by the SDK. Passing a file system path to a Certificate Authority file (chmodded to <code>0755</code>) will use that. Leave this set to <code>false</code> if you're not sure.</li>
-	 * 	<li><code>credentials</code> - <code>string</code> - Optional - The name of the credential set to use for authentication.</li>
-	 * 	<li><code>default_cache_config</code> - <code>string</code> - Optional - This option allows a preferred storage type to be configured for long-term caching. This can be changed later using the <set_cache_config()> method. Valid values are: <code>apc</code>, <code>xcache</code>, or a file system path such as <code>./cache</code> or <code>/tmp/cache/</code>.</li>
-	 * 	<li><code>key</code> - <code>string</code> - Optional - Your AWS key, or a session key. If blank, the default credential set will be used.</li>
-	 * 	<li><code>secret</code> - <code>string</code> - Optional - Your AWS secret key, or a session secret key. If blank, the default credential set will be used.</li>
-	 * 	<li><code>token</code> - <code>string</code> - Optional - An AWS session token.</li></ul>
-	 * @return void
-	 */
-	public function __construct(array $options = array())
-	{
-		$this->api_version = '2011-10-01';
-		$this->hostname = self::DEFAULT_URL;
-		$this->auth_class = 'AuthV2Query';
-
-		return parent::__construct($options);
-	}
-
-
-	/*%******************************************************************************************%*/
-	// SETTERS
-
-	/**
-	 * This allows you to explicitly sets the region for the service to use.
-	 *
-	 * @param string $region (Required) The region to explicitly set. Available options are <REGION_US_E1>, <REGION_US_W1>, <REGION_US_W2>, <REGION_EU_W1>, <REGION_APAC_SE1>, <REGION_APAC_NE1>, <REGION_SA_E1>.
-	 * @return $this A reference to the current instance.
-	 */
-	public function set_region($region)
-	{
-		// @codeCoverageIgnoreStart
-		$this->set_hostname($region);
-		return $this;
-		// @codeCoverageIgnoreEnd
-	}
 
 
 	/*%******************************************************************************************%*/
@@ -225,34 +142,59 @@ class AmazonSQS extends CFRuntime
 
 
 	/*%******************************************************************************************%*/
-	// OVERWRITTEN METHODS
+	// CONSTRUCTOR
 
 	/**
-	 * This overwrites the default authenticate method in sdk.class.php to address SQS queue URLs.
+	 * Constructs a new instance of <AmazonSQS>. If the <code>AWS_DEFAULT_CACHE_CONFIG</code> configuration
+	 * option is set, requests will be authenticated using a session token. Otherwise, requests will use
+	 * the older authentication method.
 	 *
-	 * @return CFResponse Object containing a parsed HTTP response.
+	 * @param string $key (Optional) Your AWS key, or a session key. If blank, it will look for the <code>AWS_KEY</code> constant.
+	 * @param string $secret_key (Optional) Your AWS secret key, or a session secret key. If blank, it will look for the <code>AWS_SECRET_KEY</code> constant.
+	 * @param string $token (optional) An AWS session token. If blank, a request will be made to the AWS Secure Token Service to fetch a set of session credentials.
+	 * @return boolean A value of <code>false</code> if no valid values are set, otherwise <code>true</code>.
 	 */
-	public function authenticate($operation, $payload)
+	public function __construct($key = null, $secret_key = null, $token = null)
 	{
-		// Save the current hostname
-		$hostname = $this->hostname;
+		$this->api_version = '2011-10-01';
+		$this->hostname = self::DEFAULT_URL;
 
-		if (isset($payload['QueueUrl']))
+		if (!$key && !defined('AWS_KEY'))
 		{
-			// Change the hostname to the queue URL
-			$this->hostname = $payload['QueueUrl'];
-
-			// Remove "QueueURL" from the payload
-			unset($payload['QueueUrl']);
+			// @codeCoverageIgnoreStart
+			throw new SQS_Exception('No account key was passed into the constructor, nor was it set in the AWS_KEY constant.');
+			// @codeCoverageIgnoreEnd
 		}
 
-		// Perform the request
-		$response = parent::authenticate($operation, $payload);
+		if (!$secret_key && !defined('AWS_SECRET_KEY'))
+		{
+			// @codeCoverageIgnoreStart
+			throw new SQS_Exception('No account secret was passed into the constructor, nor was it set in the AWS_SECRET_KEY constant.');
+			// @codeCoverageIgnoreEnd
+		}
 
-		// Restore the hostname
-		$this->hostname = $hostname;
+		if (defined('AWS_DEFAULT_CACHE_CONFIG') && AWS_DEFAULT_CACHE_CONFIG)
+		{
+			return parent::session_based_auth($key, $secret_key, $token);
+		}
 
-		return $response;
+		return parent::__construct($key, $secret_key);
+	}
+
+
+	/*%******************************************************************************************%*/
+	// SETTERS
+
+	/**
+	 * This allows you to explicitly sets the region for the service to use.
+	 *
+	 * @param string $region (Required) The region to explicitly set. Available options are <REGION_US_E1>, <REGION_US_W1>, <REGION_EU_W1>, <REGION_APAC_SE1>, <REGION_APAC_NE1>.
+	 * @return $this A reference to the current instance.
+	 */
+	public function set_region($region)
+	{
+		$this->set_hostname($region);
+		return $this;
 	}
 
 
@@ -263,14 +205,14 @@ class AmazonSQS extends CFRuntime
 	 * The AddPermission action adds a permission to a queue for a specific <a href=
 	 * "http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/APIReference/Glossary.html#d0e3892">
 	 * principal</a>. This allows for sharing access to the queue.
-	 *  
+	 *
 	 * When you create a queue, you have full control access rights for the queue. Only you (as owner
 	 * of the queue) can grant or deny permissions to the queue. For more information about these
 	 * permissions, see <a href=
 	 * "http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/?acp-overview.html">
 	 * Shared Queues</a> in the Amazon SQS Developer Guide.
-	 *  
-	 * <code>AddPermission</code> writes an SQS-generated policy. If you want to write your own
+	 *
+	 * 	<code>AddPermission</code> writes an SQS-generated policy. If you want to write your own
 	 * policy, use SetQueueAttributes to upload your policy. For more information about writing your
 	 * own policy, see <a href=
 	 * "http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/?AccessPolicyLanguage.html">
@@ -288,20 +230,19 @@ class AmazonSQS extends CFRuntime
 	public function add_permission($queue_url, $label, $aws_account_id, $action_name, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
 		$opt['Label'] = $label;
-		
+
 		// Required list (non-map)
 		$opt = array_merge($opt, CFComplexType::map(array(
 			'AWSAccountId' => (is_array($aws_account_id) ? $aws_account_id : array($aws_account_id))
 		)));
-		
+
 		// Required list (non-map)
 		$opt = array_merge($opt, CFComplexType::map(array(
 			'ActionName' => (is_array($action_name) ? $action_name : array($action_name))
 		)));
 
-		return $this->authenticate('AddPermission', $opt);
+		return $this->authenticate('AddPermission', $opt, $queue_url);
 	}
 
 	/**
@@ -312,13 +253,13 @@ class AmazonSQS extends CFRuntime
 	 * 	<a href=
 	 * "http://docs.amazonwebservices.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/AboutVT.html">
 	 * Visibility Timeout</a> in the Amazon SQS Developer Guide.)
-	 *  
+	 *
 	 * For example, let's say you have a message and its default message visibility timeout is 30
 	 * minutes. You could call <code>ChangeMessageVisiblity</code> with a value of two hours and the
 	 * effective timeout would be two hours and 30 minutes. When that time comes near you could again
 	 * extend the time out by calling ChangeMessageVisiblity, but this time the maximum allowed
 	 * timeout would be 9 hours and 30 minutes.
-	 * 
+	 *
 	 * <p class="important">
 	 * If you attempt to set the <code>VisibilityTimeout</code> to an amount more than the maximum
 	 * time left, Amazon SQS returns an error. It will not automatically recalculate and increase the
@@ -343,11 +284,10 @@ class AmazonSQS extends CFRuntime
 	public function change_message_visibility($queue_url, $receipt_handle, $visibility_timeout, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
 		$opt['ReceiptHandle'] = $receipt_handle;
 		$opt['VisibilityTimeout'] = $visibility_timeout;
-		
-		return $this->authenticate('ChangeMessageVisibility', $opt);
+
+		return $this->authenticate('ChangeMessageVisibility', $opt, $queue_url);
 	}
 
 	/**
@@ -371,25 +311,24 @@ class AmazonSQS extends CFRuntime
 	public function change_message_visibility_batch($queue_url, $change_message_visibility_batch_request_entry, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
-		
+
 		// Required list + map
 		$opt = array_merge($opt, CFComplexType::map(array(
 			'ChangeMessageVisibilityBatchRequestEntry' => (is_array($change_message_visibility_batch_request_entry) ? $change_message_visibility_batch_request_entry : array($change_message_visibility_batch_request_entry))
 		)));
 
-		return $this->authenticate('ChangeMessageVisibilityBatch', $opt);
+		return $this->authenticate('ChangeMessageVisibilityBatch', $opt, $queue_url);
 	}
 
 	/**
 	 * The <code>CreateQueue</code> action creates a new queue, or returns the URL of an existing one.
 	 * When you request <code>CreateQueue</code>, you provide a name for the queue. To successfully
 	 * create a new queue, you must provide a name that is unique within the scope of your own queues.
-	 *  
+	 *
 	 * You may pass one or more attributes in the request. If you do not provide a value for any
 	 * attribute, the queue will have the default value for that attribute. Permitted attributes are
 	 * the same that can be set using <code>SetQueueAttributes</code>.
-	 *  
+	 *
 	 * If you provide the name of an existing queue, a new queue isn't created. If the values of
 	 * attributes provided with the request match up with those on the existing queue, the queue URL
 	 * is returned. Otherwise, a <code>QueueNameExists</code> error is returned.
@@ -410,7 +349,7 @@ class AmazonSQS extends CFRuntime
 	{
 		if (!$opt) $opt = array();
 		$opt['QueueName'] = $queue_name;
-		
+
 		// Optional map (non-list)
 		if (isset($opt['Attribute']))
 		{
@@ -420,7 +359,7 @@ class AmazonSQS extends CFRuntime
 			unset($opt['Attribute']);
 		}
 
-		return $this->authenticate('CreateQueue', $opt);
+		return $this->authenticate('CreateQueue', $opt, $this->hostname);
 	}
 
 	/**
@@ -438,10 +377,9 @@ class AmazonSQS extends CFRuntime
 	public function delete_message($queue_url, $receipt_handle, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
 		$opt['ReceiptHandle'] = $receipt_handle;
-		
-		return $this->authenticate('DeleteMessage', $opt);
+
+		return $this->authenticate('DeleteMessage', $opt, $queue_url);
 	}
 
 	/**
@@ -464,20 +402,19 @@ class AmazonSQS extends CFRuntime
 	public function delete_message_batch($queue_url, $delete_message_batch_request_entry, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
-		
+
 		// Required list + map
 		$opt = array_merge($opt, CFComplexType::map(array(
 			'DeleteMessageBatchRequestEntry' => (is_array($delete_message_batch_request_entry) ? $delete_message_batch_request_entry : array($delete_message_batch_request_entry))
 		)));
 
-		return $this->authenticate('DeleteMessageBatch', $opt);
+		return $this->authenticate('DeleteMessageBatch', $opt, $queue_url);
 	}
 
 	/**
 	 * This action unconditionally deletes the queue specified by the queue URL. Use this operation
 	 * WITH CARE! The queue is deleted even if it is NOT empty.
-	 *  
+	 *
 	 * Once a queue has been deleted, the queue name is unavailable for use with new queues for 60
 	 * seconds.
 	 *
@@ -490,14 +427,13 @@ class AmazonSQS extends CFRuntime
 	public function delete_queue($queue_url, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
-		
-		return $this->authenticate('DeleteQueue', $opt);
+
+		return $this->authenticate('DeleteQueue', $opt, $queue_url);
 	}
 
 	/**
 	 * Gets attributes for the specified queue. The following attributes are supported:
-	 * 
+	 *
 	 * <ul>
 	 * 	<li><code>All</code> - returns all values.</li>
 	 * 	<li><code>ApproximateNumberOfMessages</code> - returns the approximate number of visible
@@ -534,8 +470,7 @@ class AmazonSQS extends CFRuntime
 	public function get_queue_attributes($queue_url, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
-		
+
 		// Optional list (non-map)
 		if (isset($opt['AttributeName']))
 		{
@@ -545,7 +480,7 @@ class AmazonSQS extends CFRuntime
 			unset($opt['AttributeName']);
 		}
 
-		return $this->authenticate('GetQueueAttributes', $opt);
+		return $this->authenticate('GetQueueAttributes', $opt, $queue_url);
 	}
 
 	/**
@@ -562,8 +497,8 @@ class AmazonSQS extends CFRuntime
 	{
 		if (!$opt) $opt = array();
 		$opt['QueueName'] = $queue_name;
-		
-		return $this->authenticate('GetQueueUrl', $opt);
+
+		return $this->authenticate('GetQueueUrl', $opt, $this->hostname);
 	}
 
 	/**
@@ -578,8 +513,8 @@ class AmazonSQS extends CFRuntime
 	public function list_queues($opt = null)
 	{
 		if (!$opt) $opt = array();
-				
-		return $this->authenticate('ListQueues', $opt);
+
+		return $this->authenticate('ListQueues', $opt, $this->hostname);
 	}
 
 	/**
@@ -587,7 +522,7 @@ class AmazonSQS extends CFRuntime
 	 * ID of each message. Messages returned by this action stay in the queue until you delete them.
 	 * However, once a message is returned to a <code>ReceiveMessage</code> request, it is not
 	 * returned on subsequent <code>ReceiveMessage</code> requests for the duration of the
-	 * <code>VisibilityTimeout</code>. If you do not specify a <code>VisibilityTimeout</code> in the
+	 * 	<code>VisibilityTimeout</code>. If you do not specify a <code>VisibilityTimeout</code> in the
 	 * request, the overall visibility timeout for the queue is used for the returned messages.
 	 *
 	 * @param string $queue_url (Required) The URL of the SQS queue to take action on.
@@ -602,8 +537,7 @@ class AmazonSQS extends CFRuntime
 	public function receive_message($queue_url, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
-		
+
 		// Optional list (non-map)
 		if (isset($opt['AttributeName']))
 		{
@@ -613,7 +547,7 @@ class AmazonSQS extends CFRuntime
 			unset($opt['AttributeName']);
 		}
 
-		return $this->authenticate('ReceiveMessage', $opt);
+		return $this->authenticate('ReceiveMessage', $opt, $queue_url);
 	}
 
 	/**
@@ -631,10 +565,9 @@ class AmazonSQS extends CFRuntime
 	public function remove_permission($queue_url, $label, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
 		$opt['Label'] = $label;
-		
-		return $this->authenticate('RemovePermission', $opt);
+
+		return $this->authenticate('RemovePermission', $opt, $queue_url);
 	}
 
 	/**
@@ -651,10 +584,9 @@ class AmazonSQS extends CFRuntime
 	public function send_message($queue_url, $message_body, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
 		$opt['MessageBody'] = $message_body;
-		
-		return $this->authenticate('SendMessage', $opt);
+
+		return $this->authenticate('SendMessage', $opt, $queue_url);
 	}
 
 	/**
@@ -678,14 +610,13 @@ class AmazonSQS extends CFRuntime
 	public function send_message_batch($queue_url, $send_message_batch_request_entry, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
-		
+
 		// Required list + map
 		$opt = array_merge($opt, CFComplexType::map(array(
 			'SendMessageBatchRequestEntry' => (is_array($send_message_batch_request_entry) ? $send_message_batch_request_entry : array($send_message_batch_request_entry))
 		)));
 
-		return $this->authenticate('SendMessageBatch', $opt);
+		return $this->authenticate('SendMessageBatch', $opt, $queue_url);
 	}
 
 	/**
@@ -707,14 +638,13 @@ class AmazonSQS extends CFRuntime
 	public function set_queue_attributes($queue_url, $attribute, $opt = null)
 	{
 		if (!$opt) $opt = array();
-		$opt['QueueUrl'] = $queue_url;
-		
-		// Required map (non-list)
+
+		// Required list + map
 		$opt = array_merge($opt, CFComplexType::map(array(
 			'Attribute' => (is_array($attribute) ? $attribute : array($attribute))
 		)));
 
-		return $this->authenticate('SetQueueAttributes', $opt);
+		return $this->authenticate('SetQueueAttributes', $opt, $queue_url);
 	}
 }
 
