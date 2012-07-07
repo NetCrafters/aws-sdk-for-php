@@ -1,6 +1,10 @@
 <?php
 /*
+<<<<<<< HEAD
  * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+=======
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+>>>>>>> upstream/master
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -22,7 +26,11 @@
  * Wraps the underlying `SimpleXMLIterator` class with enhancements for rapidly traversing the DOM tree,
  * converting types, and comparisons.
  *
+<<<<<<< HEAD
  * @version 2011.04.25
+=======
+ * @version 2012.05.31
+>>>>>>> upstream/master
  * @license See the included NOTICE.md file for more information.
  * @copyright See the included NOTICE.md file for more information.
  * @link http://aws.amazon.com/php/ PHP Developer Center
@@ -41,6 +49,14 @@ class CFSimpleXML extends SimpleXMLIterator
 	public $xml_ns_url;
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Stores whether or not the value is encoded.
+	 */
+	public $encoded = false;
+
+	/**
+>>>>>>> upstream/master
 	 * Catches requests made to methods that don't exist. Specifically, looks for child nodes via XPath.
 	 *
 	 * @param string $name (Required) The name of the method.
@@ -78,6 +94,19 @@ class CFSimpleXML extends SimpleXMLIterator
 	}
 
 	/**
+<<<<<<< HEAD
+=======
+	 * Gets the current XML node as a true string.
+	 *
+	 * @return string The current XML node as a true string.
+	 */
+	public function __toString()
+	{
+		return $this->to_string();
+	}
+
+	/**
+>>>>>>> upstream/master
 	 * Alternate approach to constructing a new instance. Supports chaining.
 	 *
 	 * @param string $data (Required) A well-formed XML string or the path or URL to an XML document if $data_is_url is <code>true</code>.
@@ -144,7 +173,18 @@ class CFSimpleXML extends SimpleXMLIterator
 	 */
 	public function to_string()
 	{
+<<<<<<< HEAD
 		return (string) $this;
+=======
+		$s = (string) $this;
+
+		if ($this->attributes())
+		{
+			return json_decode(substr($s, 14));
+		}
+
+		return $s;
+>>>>>>> upstream/master
 	}
 
 	/**
@@ -212,4 +252,40 @@ class CFSimpleXML extends SimpleXMLIterator
 	{
 		return (stripos((string) $this, $value) !== false);
 	}
+<<<<<<< HEAD
+=======
+
+	/**
+	 * Whether or not the current node matches the regular expression pattern.
+	 *
+	 * @param string $pattern (Required) The pattern to match the current node against.
+	 * @return boolean Whether or not the current node matches the pattern.
+	 */
+	public function matches($pattern)
+	{
+		return (bool) preg_match($pattern, (string) $this);
+	}
+
+	/**
+	 * Whether or not the current node starts with the compared value.
+	 *
+	 * @param string $value (Required) The value to compare the current node to.
+	 * @return boolean Whether or not the current node starts with the compared value.
+	 */
+	public function starts_with($value)
+	{
+		return $this->matches("@^$value@u");
+	}
+
+	/**
+	 * Whether or not the current node ends with the compared value.
+	 *
+	 * @param string $value (Required) The value to compare the current node to.
+	 * @return boolean Whether or not the current node ends with the compared value.
+	 */
+	public function ends_with($value)
+	{
+		return $this->matches("@$value$@u");
+	}
+>>>>>>> upstream/master
 }

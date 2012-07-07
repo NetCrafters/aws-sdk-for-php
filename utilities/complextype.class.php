@@ -1,6 +1,10 @@
 <?php
 /*
+<<<<<<< HEAD
  * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+=======
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+>>>>>>> upstream/master
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -95,7 +99,11 @@ class CFComplexType
 					}
 				}
 
+<<<<<<< HEAD
 				$key .= (($key === '') ? $k : '.' . $k);
+=======
+				$key .= ($key === '' ? $k : '.' . $k);
+>>>>>>> upstream/master
 
 				if (is_array($v))
 				{

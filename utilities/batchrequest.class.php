@@ -1,6 +1,10 @@
 <?php
 /*
+<<<<<<< HEAD
  * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+=======
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+>>>>>>> upstream/master
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -32,7 +36,11 @@ class CFBatchRequest_Exception extends Exception {}
  * ability to queue up a series of requests and execute them all in parallel. This allows for faster
  * application performance when a lot of requests are involved.
  *
+<<<<<<< HEAD
  * @version 2010.08.09
+=======
+ * @version 2011.12.02
+>>>>>>> upstream/master
  * @license See the included NOTICE.md file for more information.
  * @copyright See the included NOTICE.md file for more information.
  * @link http://aws.amazon.com/php/ PHP Developer Center
@@ -49,6 +57,24 @@ class CFBatchRequest extends CFRuntime
 	 */
 	public $limit;
 
+<<<<<<< HEAD
+=======
+	/**
+	 * The proxy to use for connecting.
+	 */
+	public $proxy = null;
+
+	/**
+	 * The helpers to use when connecting.
+	 */
+	public $helpers = null;
+
+	/**
+	 * The active credential set.
+	 */
+	public $credentials;
+
+>>>>>>> upstream/master
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
@@ -63,6 +89,22 @@ class CFBatchRequest extends CFRuntime
 	{
 		$this->queue = array();
 		$this->limit = $limit ? $limit : -1;
+<<<<<<< HEAD
+=======
+		$this->credentials = new CFCredential(array());
+		return $this;
+	}
+
+	/**
+	 * Sets the AWS credentials to use for the batch request.
+	 *
+	 * @param CFCredential $credentials (Required) The credentials to use for signing and making requests.
+	 * @return $this A reference to the current instance.
+	 */
+	public function use_credentials(CFCredential $credentials)
+	{
+		$this->credentials = $credentials;
+>>>>>>> upstream/master
 		return $this;
 	}
 
@@ -86,7 +128,11 @@ class CFBatchRequest extends CFRuntime
 	 */
 	public function send($opt = null)
 	{
+<<<<<<< HEAD
 		$http = new $this->request_class();
+=======
+		$http = new $this->request_class(null, $this->proxy, null, $this->credentials);
+>>>>>>> upstream/master
 
 		// Make the request
 		$response = $http->send_multi_request($this->queue, array(

@@ -1,6 +1,10 @@
 <?php
 /*
+<<<<<<< HEAD
  * Copyright 2010-2011 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+=======
+ * Copyright 2010-2012 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+>>>>>>> upstream/master
  *
  * Licensed under the Apache License, Version 2.0 (the "License").
  * You may not use this file except in compliance with the License.
@@ -16,6 +20,7 @@
 
 
 /*%******************************************************************************************%*/
+<<<<<<< HEAD
 // CORE DEPENDENCIES
 
 // Look for include file in the same directory (e.g. `./config.inc.php`).
@@ -31,6 +36,8 @@ elseif (getenv('HOME') && file_exists(getenv('HOME') . DIRECTORY_SEPARATOR . '.a
 
 
 /*%******************************************************************************************%*/
+=======
+>>>>>>> upstream/master
 // EXCEPTIONS
 
 /**
@@ -38,6 +45,14 @@ elseif (getenv('HOME') && file_exists(getenv('HOME') . DIRECTORY_SEPARATOR . '.a
  */
 class CFRuntime_Exception extends Exception {}
 
+<<<<<<< HEAD
+=======
+/**
+ * Parsing Exception.
+ */
+class Parser_Exception extends Exception {}
+
+>>>>>>> upstream/master
 
 /*%******************************************************************************************%*/
 // DETERMINE WHAT ENVIRONMENT DATA TO ADD TO THE USERAGENT FOR METRIC TRACKING
@@ -96,7 +111,11 @@ function __aws_sdk_ua_callback()
 
 	foreach (array('memory_limit', 'date.timezone', 'open_basedir', 'safe_mode', 'zend.enable_gc') as $cfg)
 	{
+<<<<<<< HEAD
 		$cfg_value = get_cfg_var($cfg);
+=======
+		$cfg_value = ini_get($cfg);
+>>>>>>> upstream/master
 
 		if (in_array($cfg, array('memory_limit', 'date.timezone'), true))
 		{
@@ -125,9 +144,14 @@ function __aws_sdk_ua_callback()
 // INTERMEDIARY CONSTANTS
 
 define('CFRUNTIME_NAME', 'aws-sdk-php');
+<<<<<<< HEAD
 define('CFRUNTIME_VERSION', '1.4.8');
 // define('CFRUNTIME_BUILD', gmdate('YmdHis', filemtime(__FILE__))); // @todo: Hardcode for release.
 define('CFRUNTIME_BUILD', '20111207191027');
+=======
+define('CFRUNTIME_VERSION', '1.5.8.1');
+define('CFRUNTIME_BUILD', '20120629120500');
+>>>>>>> upstream/master
 define('CFRUNTIME_USERAGENT', CFRUNTIME_NAME . '/' . CFRUNTIME_VERSION . ' PHP/' . PHP_VERSION . ' ' . str_replace(' ', '_', php_uname('s')) . '/' . str_replace(' ', '_', php_uname('r')) . ' Arch/' . php_uname('m') . ' SAPI/' . php_sapi_name() . ' Integer/' . PHP_INT_MAX . ' Build/' . CFRUNTIME_BUILD . __aws_sdk_ua_callback());
 
 
@@ -138,7 +162,11 @@ define('CFRUNTIME_USERAGENT', CFRUNTIME_NAME . '/' . CFRUNTIME_VERSION . ' PHP/'
  * Core functionality and default settings shared across all SDK classes. All methods and properties in this
  * class are inherited by the service-specific classes.
  *
+<<<<<<< HEAD
  * @version 2011.07.28
+=======
+ * @version 2012.05.25
+>>>>>>> upstream/master
  * @license See the included NOTICE.md file for more information.
  * @copyright See the included NOTICE.md file for more information.
  * @link http://aws.amazon.com/php/ PHP Developer Center
@@ -188,6 +216,7 @@ class CFRuntime
 	public $auth_token;
 
 	/**
+<<<<<<< HEAD
 	 * The Amazon Account ID, without hyphens.
 	 */
 	public $account_id;
@@ -198,6 +227,8 @@ class CFRuntime
 	public $assoc_id;
 
 	/**
+=======
+>>>>>>> upstream/master
 	 * Handle for the utility functions.
 	 */
 	public $util;
@@ -243,11 +274,14 @@ class CFRuntime
 	public $batch_class = 'CFBatchRequest';
 
 	/**
+<<<<<<< HEAD
 	 * The number of seconds to adjust the request timestamp by (defaults to 0).
 	 */
 	public $adjust_offset = 0;
 
 	/**
+=======
+>>>>>>> upstream/master
 	 * The state of SSL/HTTPS use.
 	 */
 	public $use_ssl = true;
@@ -352,11 +386,50 @@ class CFRuntime
 	 */
 	public $registered_streaming_write_callback = null;
 
+<<<<<<< HEAD
+=======
+	/**
+	 * The credentials to use for authentication.
+	 */
+	public $credentials = array();
+
+	/**
+	 * The authentication class to use.
+	 */
+	public $auth_class = null;
+
+	/**
+	 * The operation to execute.
+	 */
+	public $operation = null;
+
+	/**
+	 * The payload to send.
+	 */
+	public $payload = array();
+
+	/**
+	 * The string prefix to prepend to the operation name.
+	 */
+	public $operation_prefix = '';
+
+	/**
+	 * The number of times a request has been retried.
+	 */
+	public $redirects = 0;
+
+	/**
+	 * The state of whether the response should be parsed or not.
+	 */
+	public $parse_the_response = true;
+
+>>>>>>> upstream/master
 
 	/*%******************************************************************************************%*/
 	// CONSTRUCTOR
 
 	/**
+<<<<<<< HEAD
 	 * The constructor. You would not normally instantiate this class directly. Rather, you would instantiate
 	 * a service-specific class.
 	 *
@@ -366,6 +439,23 @@ class CFRuntime
 	 * @return boolean A value of `false` if no valid values are set, otherwise `true`.
 	 */
 	public function __construct($key = null, $secret_key = null, $token = null)
+=======
+	 * The constructor. This class should not be instantiated directly. Rather, a service-specific class
+	 * should be instantiated.
+	 *
+	 * @param array $options (Optional) An associative array of parameters that can have the following keys: <ul>
+	 * 	<li><code>certificate_authority</code> - <code>boolean</code> - Optional - Determines which Cerificate Authority file to use. A value of boolean <code>false</code> will use the Certificate Authority file available on the system. A value of boolean <code>true</code> will use the Certificate Authority provided by the SDK. Passing a file system path to a Certificate Authority file (chmodded to <code>0755</code>) will use that. Leave this set to <code>false</code> if you're not sure.</li>
+	 * 	<li><code>credentials</code> - <code>string</code> - Optional - The name of the credential set to use for authentication.</li>
+	 * 	<li><code>default_cache_config</code> - <code>string</code> - Optional - This option allows a preferred storage type to be configured for long-term caching. This can be changed later using the <set_cache_config()> method. Valid values are: <code>apc</code>, <code>xcache</code>, or a file system path such as <code>./cache</code> or <code>/tmp/cache/</code>.</li>
+	 * 	<li><code>key</code> - <code>string</code> - Optional - Your AWS key, or a session key. If blank, the default credential set will be used.</li>
+	 * 	<li><code>instance_profile_timeout</code> - <code>integer</code> - Optional - When retrieving IAM instance profile credentials, there is a hard connection timeout that defaults to 2 seconds to prevent unnecessary on non-EC2 systems. This setting allows you to change that timeout if needed.</li>
+	 * 	<li><code>secret</code> - <code>string</code> - Optional - Your AWS secret key, or a session secret key. If blank, the default credential set will be used.</li>
+	 * 	<li><code>token</code> - <code>string</code> - Optional - An AWS session token.</li>
+	 * 	<li><code>use_instance_profile_credentials</code> - <code>boolean</code> - Optional - Forces the use of IAM Instance Profile credentials, even when regular credentials are provided.</li></ul>
+	 * @return void
+	 */
+	public function __construct(array $options = array())
+>>>>>>> upstream/master
 	{
 		// Instantiate the utilities class.
 		$this->util = new $this->utilities_class();
@@ -373,6 +463,7 @@ class CFRuntime
 		// Determine the current service.
 		$this->service = get_class($this);
 
+<<<<<<< HEAD
 		// Set default values
 		$this->key = null;
 		$this->secret_key = null;
@@ -501,11 +592,86 @@ class CFRuntime
 		}
 
 		return null;
+=======
+		// Create credentials based on the options
+		$runtime_credentials = new CFCredential($options);
+		$credentials_provided = false;
+
+		// Retrieve a credential set from config.inc.php if it exists
+		if (isset($options['credentials']))
+		{
+			// Use a specific credential set and merge with the runtime credentials
+			$this->credentials = CFCredentials::get($options['credentials'])
+				->merge($runtime_credentials);
+		}
+		else
+		{
+			try
+			{
+				// Use the default credential set and merge with the runtime credentials
+				$this->credentials = CFCredentials::get(CFCredentials::DEFAULT_KEY)
+					->merge($runtime_credentials);
+			}
+			catch (CFCredentials_Exception $e)
+			{
+				// Only the runtime credentials were provided
+				$this->credentials = $runtime_credentials;
+			}
+		}
+
+		// Check if keys were actually provided
+		if (isset($this->credentials['key']) && isset($this->credentials['secret']))
+		{
+			$credentials_provided = true;
+		}
+
+		// Check for an instance profile credentials override
+		if (isset($this->credentials['use_instance_profile_credentials']) && $this->credentials['use_instance_profile_credentials'])
+		{
+			$credentials_provided = false;
+		}
+
+		// Automatically enable whichever caching mechanism is set to default.
+		$this->set_cache_config($this->credentials->default_cache_config);
+
+		// If no credentials were provided, try to get them from the EC2 instance profile
+		if (!$credentials_provided)
+		{
+			// Default caching mechanism is required
+			if (!$this->credentials->default_cache_config)
+			{
+				// @codeCoverageIgnoreStart
+				throw new CFCredentials_Exception('No credentials were provided. The SDK attempts to retrieve Instance '
+					. 'Profile credentials from the EC2 Instance Metadata Service, but doing this requires the '
+					. '"default_cache_config" option to be set in the config.inc.php file or constructor. In order to '
+					. 'cache the retrieved credentials.');
+				// @codeCoverageIgnoreEnd
+			}
+
+			// Instantiate and invoke the cache for instance profile credentials
+			$cache = new $this->cache_class('instance_profile_credentials', $this->cache_location, 0, $this->cache_compress);
+			if ($data = $cache->read())
+			{
+				$cache->expire_in((strtotime($data['expires']) - time()) * 0.85);
+			}
+			$instance_profile_credentials = $cache->response_manager(array($this, 'cache_instance_profile_credentials'), array($cache, $options));
+
+			$this->credentials->key    = $instance_profile_credentials['key'];
+			$this->credentials->secret = $instance_profile_credentials['secret'];
+			$this->credentials->token  = $instance_profile_credentials['token'];
+		}
+
+		// Set internal credentials after they are resolved
+		$this->key = $this->credentials->key;
+		$this->secret_key = $this->credentials->secret;
+		$this->auth_token = $this->credentials->token;
+>>>>>>> upstream/master
 	}
 
 	/**
 	 * Alternate approach to constructing a new instance. Supports chaining.
 	 *
+<<<<<<< HEAD
 	 * @param string $key (Optional) Your AWS key, or a session key. If blank, it will look for the <code>AWS_KEY</code> constant.
 	 * @param string $secret_key (Optional) Your AWS secret key, or a session secret key. If blank, it will look for the <code>AWS_SECRET_KEY</code> constant.
 	 * @param string $token (optional) An AWS session token. If blank, a request will be made to the AWS Secure Token Service to fetch a set of session credentials.
@@ -520,6 +686,26 @@ class CFRuntime
 
 		$self = get_called_class();
 		return new $self($key, $secret_key, $token);
+=======
+	 * @param array $options (Optional) An associative array of parameters that can have the following keys: <ul>
+	 * 	<li><code>certificate_authority</code> - <code>boolean</code> - Optional - Determines which Cerificate Authority file to use. A value of boolean <code>false</code> will use the Certificate Authority file available on the system. A value of boolean <code>true</code> will use the Certificate Authority provided by the SDK. Passing a file system path to a Certificate Authority file (chmodded to <code>0755</code>) will use that. Leave this set to <code>false</code> if you're not sure.</li>
+	 * 	<li><code>credentials</code> - <code>string</code> - Optional - The name of the credential set to use for authentication.</li>
+	 * 	<li><code>default_cache_config</code> - <code>string</code> - Optional - This option allows a preferred storage type to be configured for long-term caching. This can be changed later using the <set_cache_config()> method. Valid values are: <code>apc</code>, <code>xcache</code>, or a file system path such as <code>./cache</code> or <code>/tmp/cache/</code>.</li>
+	 * 	<li><code>key</code> - <code>string</code> - Optional - Your AWS key, or a session key. If blank, the default credential set will be used.</li>
+	 * 	<li><code>secret</code> - <code>string</code> - Optional - Your AWS secret key, or a session secret key. If blank, the default credential set will be used.</li>
+	 * 	<li><code>token</code> - <code>string</code> - Optional - An AWS session token.</li></ul>
+	 * @return void
+	 */
+	public static function factory(array $options = array())
+	{
+		if (version_compare(PHP_VERSION, '5.3.0', '<'))
+		{
+			throw new Exception('PHP 5.3 or newer is required to instantiate a new class with CLASS::factory().');
+		}
+
+		$self = get_called_class();
+		return new $self($options);
+>>>>>>> upstream/master
 	}
 
 
@@ -551,6 +737,7 @@ class CFRuntime
 	// SET CUSTOM SETTINGS
 
 	/**
+<<<<<<< HEAD
 	 * Adjusts the current time. Use this method for occasions when a server is out of sync with Amazon
 	 * servers.
 	 *
@@ -564,6 +751,8 @@ class CFRuntime
 	}
 
 	/**
+=======
+>>>>>>> upstream/master
 	 * Set the proxy settings to use.
 	 *
 	 * @param string $proxy (Required) Accepts proxy credentials in the following format: `proxy://user:pass@hostname:port`
@@ -691,6 +880,15 @@ class CFRuntime
 	 */
 	public function set_cache_config($location, $gzip = true)
 	{
+<<<<<<< HEAD
+=======
+		// If location is empty, don't do anything.
+		if (empty($location))
+		{
+			return $this;
+		}
+
+>>>>>>> upstream/master
 		// If we have an array, we're probably passing in Memcached servers and ports.
 		if (is_array($location))
 		{
@@ -775,6 +973,114 @@ class CFRuntime
 		return $this;
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * Fetches and caches STS credentials. This is meant to be used by the constructor, and is not to be
+	 * manually invoked.
+	 *
+	 * @param CacheCore $cache (Required) The a reference to the cache object that is being used to handle the caching.
+	 * @param array $options (Required) The options that were passed into the constructor.
+	 * @return mixed The data to be cached, or NULL.
+	 */
+	public function cache_sts_credentials($cache, $options)
+	{
+		$token = new AmazonSTS($options);
+		$response = $token->get_session_token();
+
+		if ($response->isOK())
+		{
+			// Update the expiration
+			$expiration_time = strtotime((string) $response->body->GetSessionTokenResult->Credentials->Expiration);
+			$expiration_duration = round(($expiration_time - time()) * 0.85);
+			$cache->expire_in($expiration_duration);
+
+			// Return the important data
+			$credentials = $response->body->GetSessionTokenResult->Credentials;
+
+			return array(
+				'key'     => (string) $credentials->AccessKeyId,
+				'secret'  => (string) $credentials->SecretAccessKey,
+				'token'   => (string) $credentials->SessionToken,
+				'expires' => (string) $credentials->Expiration,
+			);
+		}
+
+		// @codeCoverageIgnoreStart
+		throw new STS_Exception('Temporary credentials from the AWS Security '
+			. 'Token Service could not be retrieved using the provided long '
+			. 'term credentials. It\'s possible that the provided long term '
+			. 'credentials were invalid.');
+		// @codeCoverageIgnoreEnd
+	}
+
+	/**
+	 * Fetches and caches EC2 instance profile credentials. This is meant to be used by the constructor, and is not to
+	 * be manually invoked.
+	 *
+	 * @param CacheCore $cache (Required) The a reference to the cache object that is being used to handle the caching.
+	 * @param array $options (Required) The options that were passed into the constructor.
+	 * @return mixed The data to be cached, or NULL.
+	 */
+	public function cache_instance_profile_credentials($cache, $options)
+	{
+		$instance_profile_url = 'http://169.254.169.254/latest/meta-data/iam/security-credentials/';
+		$connect_timeout = isset($options['instance_profile_timeout']) ? $options['instance_profile_timeout'] : 2;
+
+		try
+		{
+			// Make a call to the EC2 Metadata Service to find the available instance profile
+			$request = new RequestCore($instance_profile_url);
+			$request->set_curlopts(array(CURLOPT_CONNECTTIMEOUT => $connect_timeout));
+			$response = $request->send_request(true);
+
+			if ($response->isOK())
+			{
+				// Get the instance profile name
+				$profile = (string) $response->body;
+
+				// Make a call to the EC2 Metadata Service to get the instance profile credentials
+				$request = new RequestCore($instance_profile_url . $profile);
+				$request->set_curlopts(array(CURLOPT_CONNECTTIMEOUT => $connect_timeout));
+				$response = $request->send_request(true);
+
+				if ($response->isOK())
+				{
+					// Get the credentials
+					$credentials = json_decode($response->body, true);
+
+					if ($credentials['Code'] === 'Success')
+					{
+						// Determine the expiration time
+						$expiration_time = strtotime((string) $credentials['Expiration']);
+						$expiration_duration = round(($expiration_time - time()) * 0.85);
+						$cache->expire_in($expiration_duration);
+
+						// Return the credential information
+						return array(
+							'key'     => $credentials['AccessKeyId'],
+							'secret'  => $credentials['SecretAccessKey'],
+							'token'   => $credentials['Token'],
+							'expires' => $credentials['Expiration'],
+						);
+					}
+				}
+			}
+		}
+		catch (cURL_Exception $e)
+		{
+			// The EC2 Metadata Service does not exist or had timed out.
+			// An exception will be thrown on the next line.
+		}
+
+		// @codeCoverageIgnoreStart
+		throw new CFCredentials_Exception('No credentials were provided. The SDK attempted to retrieve Instance '
+			. 'Profile credentials from the EC2 Instance Metadata Service, but failed to do so. Instance profile '
+			. 'credentials are only accessible on EC2 instances configured with a specific IAM role.');
+		// @codeCoverageIgnoreEnd
+	}
+
+>>>>>>> upstream/master
 
 	/*%******************************************************************************************%*/
 	// SET CUSTOM CLASSES
@@ -860,6 +1166,7 @@ class CFRuntime
 	// AUTHENTICATION
 
 	/**
+<<<<<<< HEAD
 	 * Default, shared method for authenticating a connection to AWS. Overridden on a class-by-class basis
 	 * as necessary.
 	 *
@@ -881,12 +1188,49 @@ class CFRuntime
 		$method_arguments = func_get_args();
 		$headers = array();
 		$signed_headers = array();
+=======
+	 * Default, shared method for authenticating a connection to AWS.
+	 *
+	 * @param string $operation (Required) Indicates the operation to perform.
+	 * @param array $payload (Required) An associative array of parameters for authenticating. See the individual methods for allowed keys.
+	 * @return CFResponse Object containing a parsed HTTP response.
+	 */
+	public function authenticate($operation, $payload)
+	{
+		$original_payload = $payload;
+		$method_arguments = func_get_args();
+		$curlopts = array();
+		$return_curl_handle = false;
+
+		if (substr($operation, 0, strlen($this->operation_prefix)) !== $this->operation_prefix)
+		{
+			$operation = $this->operation_prefix . $operation;
+		}
+
+		// Extract the custom CURLOPT settings from the payload
+		if (is_array($payload) && isset($payload['curlopts']))
+		{
+			$curlopts = $payload['curlopts'];
+			unset($payload['curlopts']);
+		}
+
+		// Determine whether the response or curl handle should be returned
+		if (is_array($payload) && isset($payload['returnCurlHandle']))
+		{
+			$return_curl_handle = isset($payload['returnCurlHandle']) ? $payload['returnCurlHandle'] : false;
+			unset($payload['returnCurlHandle']);
+		}
+>>>>>>> upstream/master
 
 		// Use the caching flow to determine if we need to do a round-trip to the server.
 		if ($this->use_cache_flow)
 		{
 			// Generate an identifier specific to this particular set of arguments.
+<<<<<<< HEAD
 			$cache_id = $this->key . '_' . get_class($this) . '_' . $action . '_' . sha1(serialize($method_arguments));
+=======
+			$cache_id = $this->key . '_' . get_class($this) . '_' . $operation . '_' . sha1(serialize($method_arguments));
+>>>>>>> upstream/master
 
 			// Instantiate the appropriate caching object.
 			$this->cache_object = new $this->cache_class($cache_id, $this->cache_location, $this->cache_expires, $this->cache_compress);
@@ -908,6 +1252,7 @@ class CFRuntime
 			return $data;
 		}
 
+<<<<<<< HEAD
 		$return_curl_handle = false;
 		$x_amz_target = null;
 
@@ -1148,18 +1493,46 @@ class CFRuntime
 
 			$request->add_header('X-Amzn-Authorization', $headers['X-Amzn-Authorization']);
 		}
+=======
+		/*%******************************************************************************************%*/
+
+		// Signer
+		$signer = new $this->auth_class($this->hostname, $operation, $payload, $this->credentials);
+		$signer->key = $this->key;
+		$signer->secret_key = $this->secret_key;
+		$signer->auth_token = $this->auth_token;
+		$signer->api_version = $this->api_version;
+		$signer->utilities_class = $this->utilities_class;
+		$signer->request_class = $this->request_class;
+		$signer->response_class = $this->response_class;
+		$signer->use_ssl = $this->use_ssl;
+		$signer->proxy = $this->proxy;
+		$signer->util = $this->util;
+		$signer->registered_streaming_read_callback = $this->registered_streaming_read_callback;
+		$signer->registered_streaming_write_callback = $this->registered_streaming_write_callback;
+		$request = $signer->authenticate();
+>>>>>>> upstream/master
 
 		// Update RequestCore settings
 		$request->request_class = $this->request_class;
 		$request->response_class = $this->response_class;
 		$request->ssl_verification = $this->ssl_verification;
 
+<<<<<<< HEAD
+=======
+		/*%******************************************************************************************%*/
+
+>>>>>>> upstream/master
 		// Debug mode
 		if ($this->debug_mode)
 		{
 			$request->debug_mode = $this->debug_mode;
 		}
 
+<<<<<<< HEAD
+=======
+		// Set custom CURLOPT settings
+>>>>>>> upstream/master
 		if (count($curlopts))
 		{
 			$request->set_curlopts($curlopts);
@@ -1182,6 +1555,7 @@ class CFRuntime
 		// Send!
 		$request->send_request();
 
+<<<<<<< HEAD
 		$request_headers = $headers;
 
 		// Prepare the response.
@@ -1204,6 +1578,61 @@ class CFRuntime
 			}
 		}
 
+=======
+		// Prepare the response.
+		$headers = $request->get_response_header();
+		$headers['x-aws-stringtosign'] = $signer->string_to_sign;
+
+		if (isset($signer->canonical_request))
+		{
+			$headers['x-aws-canonicalrequest'] = $signer->canonical_request;
+		}
+
+		$headers['x-aws-request-headers'] = $request->request_headers;
+		$headers['x-aws-body'] = $signer->querystring;
+
+		$data = new $this->response_class($headers, ($this->parse_the_response === true) ? $this->parse_callback($request->get_response_body()) : $request->get_response_body(), $request->get_response_code());
+
+		// Was it Amazon's fault the request failed? Retry the request until we reach $max_retries.
+		if (
+		    (integer) $request->get_response_code() === 500 || // Internal Error (presumably transient)
+		    (integer) $request->get_response_code() === 503)   // Service Unavailable (presumably transient)
+		{
+			if ($this->redirects <= $this->max_retries)
+			{
+				// Exponential backoff
+				$delay = (integer) (pow(4, $this->redirects) * 100000);
+				usleep($delay);
+				$this->redirects++;
+				$data = $this->authenticate($operation, $original_payload);
+			}
+		}
+
+		// DynamoDB has custom logic
+		elseif (
+			(integer) $request->get_response_code() === 400 &&
+			 stripos((string) $request->get_response_body(), 'com.amazonaws.dynamodb.') !== false && (
+				stripos((string) $request->get_response_body(), 'ProvisionedThroughputExceededException') !== false
+			)
+		)
+		{
+			if ($this->redirects === 0)
+			{
+				$this->redirects++;
+				$data = $this->authenticate($operation, $original_payload);
+			}
+			elseif ($this->redirects <= max($this->max_retries, 10))
+			{
+				// Exponential backoff
+				$delay = (integer) (pow(2, ($this->redirects - 1)) * 50000);
+				usleep($delay);
+				$this->redirects++;
+				$data = $this->authenticate($operation, $original_payload);
+			}
+		}
+
+		$this->redirects = 0;
+>>>>>>> upstream/master
 		return $data;
 	}
 
@@ -1311,6 +1740,12 @@ class CFRuntime
 	 */
 	public function parse_callback($response, $headers = null)
 	{
+<<<<<<< HEAD
+=======
+		// Bail out
+		if (!$this->parse_the_response) return $response;
+
+>>>>>>> upstream/master
 		// Shorten this so we have a (mostly) single code path
 		if (isset($response->body))
 		{
@@ -1339,6 +1774,7 @@ class CFRuntime
 			{
 				case 'gzip':
 				case 'x-gzip':
+<<<<<<< HEAD
 					if (strpos($headers['_info']['url'], 'monitoring.') !== false)
 					{
 						// CloudWatch incorrectly uses the deflate algorithm when they say gzip.
@@ -1380,6 +1816,23 @@ class CFRuntime
 						{
 							$body = $uncompressed;
 						}
+=======
+					$decoder = new CFGzipDecode($body);
+					if ($decoder->parse())
+					{
+						$body = $decoder->data;
+					}
+					break;
+
+				case 'deflate':
+					if (($uncompressed = gzuncompress($body)) !== false)
+					{
+						$body = $uncompressed;
+					}
+					elseif (($uncompressed = gzinflate($body)) !== false)
+					{
+						$body = $uncompressed;
+>>>>>>> upstream/master
 					}
 					break;
 			}
@@ -1394,17 +1847,36 @@ class CFRuntime
 			// Strip the default XML namespace to simplify XPath expressions
 			$body = str_replace("xmlns=", "ns=", $body);
 
+<<<<<<< HEAD
 			// Parse the XML body
 			$body = new $this->parser_class($body);
 		}
 		// Look for JSON cues
 		elseif (
 			(isset($headers['content-type']) && $headers['content-type'] === 'application/json') || // We know it's JSON
+=======
+			try {
+				// Parse the XML body
+				$body = new $this->parser_class($body);
+			}
+			catch (Exception $e)
+			{
+				throw new Parser_Exception($e->getMessage());
+			}
+		}
+		// Look for JSON cues
+		elseif (
+			(isset($headers['content-type']) && ($headers['content-type'] === 'application/json') || $headers['content-type'] === 'application/x-amz-json-1.0') || // We know it's JSON
+>>>>>>> upstream/master
 			(!isset($headers['content-type']) && $this->util->is_json($body)) // Sniff for JSON
 		)
 		{
 			// Normalize JSON to a CFSimpleXML object
+<<<<<<< HEAD
 			$body = CFJSON::to_xml($body);
+=======
+			$body = CFJSON::to_xml($body, $this->parser_class);
+>>>>>>> upstream/master
 		}
 
 		// Put the parsed data back where it goes
@@ -1460,6 +1932,7 @@ class CFRuntime
 	 * this method is cached. Accepts identical parameters as the <authenticate()> method. Never call this
 	 * method directly -- it is used internally by the caching system.
 	 *
+<<<<<<< HEAD
 	 * @param string $action (Required) Indicates the action to perform.
 	 * @param array $opt (Optional) An associative array of parameters for authenticating. See the individual methods for allowed keys.
 	 * @param string $domain (Optional) The URL of the queue to perform the action on.
@@ -1467,12 +1940,23 @@ class CFRuntime
 	 * @return CFResponse A parsed HTTP response.
 	 */
 	public function cache_callback($action, $opt = null, $domain = null, $signature_version = 2)
+=======
+	 * @param string $operation (Required) Indicates the operation to perform.
+	 * @param array $payload (Required) An associative array of parameters for authenticating. See the individual methods for allowed keys.
+	 * @return CFResponse A parsed HTTP response.
+	 */
+	public function cache_callback($operation, $payload)
+>>>>>>> upstream/master
 	{
 		// Disable the cache flow since it's already been handled.
 		$this->use_cache_flow = false;
 
 		// Make the request
+<<<<<<< HEAD
 		$response = $this->authenticate($action, $opt, $domain, $signature_version);
+=======
+		$response = $this->authenticate($operation, $payload);
+>>>>>>> upstream/master
 
 		// If this is an XML document, convert it back to a string.
 		if (isset($response->body) && ($response->body instanceof SimpleXMLElement))
@@ -1515,7 +1999,10 @@ class CFRuntime
  */
 class CFLoader
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
 	/*%******************************************************************************************%*/
 	// AUTO-LOADER
 
@@ -1523,7 +2010,11 @@ class CFLoader
 	 * Automatically load classes that aren't included.
 	 *
 	 * @param string $class (Required) The classname to load.
+<<<<<<< HEAD
 	 * @return void
+=======
+	 * @return boolean Whether or not the file was successfully loaded.
+>>>>>>> upstream/master
 	 */
 	public static function autoloader($class)
 	{
@@ -1532,29 +2023,60 @@ class CFLoader
 		// Amazon SDK classes
 		if (strstr($class, 'Amazon'))
 		{
+<<<<<<< HEAD
 			$path .= 'services' . DIRECTORY_SEPARATOR . str_ireplace('Amazon', '', strtolower($class)) . '.class.php';
+=======
+			if (file_exists($require_this = $path . 'services' . DIRECTORY_SEPARATOR . str_ireplace('Amazon', '', strtolower($class)) . '.class.php'))
+			{
+				require_once $require_this;
+				return true;
+			}
+
+			return false;
+>>>>>>> upstream/master
 		}
 
 		// Utility classes
 		elseif (strstr($class, 'CF'))
 		{
+<<<<<<< HEAD
 			$path .= 'utilities' . DIRECTORY_SEPARATOR . str_ireplace('CF', '', strtolower($class)) . '.class.php';
+=======
+			if (file_exists($require_this = $path . 'utilities' . DIRECTORY_SEPARATOR . str_ireplace('CF', '', strtolower($class)) . '.class.php'))
+			{
+				require_once $require_this;
+				return true;
+			}
+
+			return false;
+>>>>>>> upstream/master
 		}
 
 		// Load CacheCore
 		elseif (strstr($class, 'Cache'))
 		{
+<<<<<<< HEAD
 			if (file_exists($ipath = 'lib' . DIRECTORY_SEPARATOR . 'cachecore' . DIRECTORY_SEPARATOR . 'icachecore.interface.php'))
 			{
 				require_once($ipath);
 			}
 
 			$path .= 'lib' . DIRECTORY_SEPARATOR . 'cachecore' . DIRECTORY_SEPARATOR . strtolower($class) . '.class.php';
+=======
+			if (file_exists($require_this = $path . 'lib' . DIRECTORY_SEPARATOR . 'cachecore' . DIRECTORY_SEPARATOR . strtolower($class) . '.class.php'))
+			{
+				require_once $require_this;
+				return true;
+			}
+
+			return false;
+>>>>>>> upstream/master
 		}
 
 		// Load RequestCore
 		elseif (strstr($class, 'RequestCore') || strstr($class, 'ResponseCore'))
 		{
+<<<<<<< HEAD
 			$path .= 'lib' . DIRECTORY_SEPARATOR . 'requestcore' . DIRECTORY_SEPARATOR . 'requestcore.class.php';
 		}
 
@@ -1576,8 +2098,132 @@ class CFLoader
 		}
 
 		return true;
+=======
+			if (file_exists($require_this = $path . 'lib' . DIRECTORY_SEPARATOR . 'requestcore' . DIRECTORY_SEPARATOR . 'requestcore.class.php'))
+			{
+				require_once $require_this;
+				return true;
+			}
+
+			return false;
+		}
+
+		// Load array-to-domdocument
+		elseif (strstr($class, 'Array2DOM'))
+		{
+			if (file_exists($require_this = $path . 'lib' . DIRECTORY_SEPARATOR . 'dom' . DIRECTORY_SEPARATOR . 'ArrayToDOMDocument.php'))
+			{
+				require_once $require_this;
+				return true;
+			}
+
+			return false;
+		}
+
+		// Load Authentication Signers
+		elseif (strstr($class, 'Auth'))
+		{
+			if (file_exists($require_this = $path . 'authentication' . DIRECTORY_SEPARATOR . str_replace('auth', 'signature_', strtolower($class)) . '.class.php'))
+			{
+				require_once $require_this;
+				return true;
+			}
+
+			return false;
+		}
+
+		// Load Signer interface
+		elseif ($class === 'Signer')
+		{
+			if (!interface_exists('Signable', false) &&
+			    file_exists($require_this = $path . 'authentication' . DIRECTORY_SEPARATOR . 'signable.interface.php'))
+			{
+				require_once $require_this;
+			}
+
+			if (file_exists($require_this = $path . 'authentication' . DIRECTORY_SEPARATOR . 'signer.abstract.php'))
+			{
+				require_once $require_this;
+				return true;
+			}
+
+			return false;
+		}
+
+		// Load Symfony YAML classes
+		elseif (strstr($class, 'sfYaml'))
+		{
+			if (file_exists($require_this = $path . 'lib' . DIRECTORY_SEPARATOR . 'yaml' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'sfYaml.php'))
+			{
+				require_once $require_this;
+				return true;
+			}
+
+			return false;
+		}
+
+		return false;
+>>>>>>> upstream/master
 	}
 }
 
 // Register the autoloader.
 spl_autoload_register(array('CFLoader', 'autoloader'));
+<<<<<<< HEAD
+=======
+
+
+/*%******************************************************************************************%*/
+// CONFIGURATION
+
+// Look for include file in the same directory (e.g. `./config.inc.php`).
+if (file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.inc.php'))
+{
+	include_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'config.inc.php';
+}
+// Fallback to `~/.aws/sdk/config.inc.php`
+else
+{
+	if (!isset($_ENV['HOME']) && isset($_SERVER['HOME']))
+	{
+		$_ENV['HOME'] = $_SERVER['HOME'];
+	}
+	elseif (!isset($_ENV['HOME']) && !isset($_SERVER['HOME']))
+	{
+		$os = strtolower(PHP_OS);
+		if (in_array($os, array('windows', 'winnt', 'win32')))
+		{
+			$_ENV['HOME'] = false;
+		}
+		else
+		{
+			$_ENV['HOME'] = `cd ~ && pwd`;
+		}
+
+		if (!$_ENV['HOME'])
+		{
+			switch ($os)
+			{
+				case 'darwin':
+					$_ENV['HOME'] = '/Users/' . get_current_user();
+					break;
+
+				case 'windows':
+				case 'winnt':
+				case 'win32':
+					$_ENV['HOME'] = 'c:' . DIRECTORY_SEPARATOR . 'Documents and Settings' . DIRECTORY_SEPARATOR . get_current_user();
+					break;
+
+				default:
+					$_ENV['HOME'] = '/home/' . get_current_user();
+					break;
+			}
+		}
+	}
+
+	if (getenv('HOME') && file_exists(getenv('HOME') . DIRECTORY_SEPARATOR . '.aws' . DIRECTORY_SEPARATOR . 'sdk' . DIRECTORY_SEPARATOR . 'config.inc.php'))
+	{
+		include_once getenv('HOME') . DIRECTORY_SEPARATOR . '.aws' . DIRECTORY_SEPARATOR . 'sdk' . DIRECTORY_SEPARATOR . 'config.inc.php';
+	}
+}
+>>>>>>> upstream/master
